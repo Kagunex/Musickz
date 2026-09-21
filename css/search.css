@@ -1,0 +1,161 @@
+/* Search page */
+
+.search-page-header {
+  margin-bottom: 1.25rem;
+}
+
+.search-page-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.suggestions {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.5rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  transition: background var(--transition);
+}
+
+.suggestion-item:hover,
+.suggestion-item:active {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.suggestion-item svg {
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Result sections */
+.result-section {
+  margin-bottom: 1.75rem;
+}
+
+.result-section h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.song-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
+}
+
+.song-row:hover,
+.song-row:active {
+  background: var(--bg-hover);
+}
+
+.song-row .art {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--bg-card);
+}
+
+.song-row .art img {
+  width: 100%;
+  height: 100%;
+}
+
+.song-row .info {
+  flex: 1;
+  min-width: 0;
+}
+
+.song-row .more {
+  color: var(--text-muted);
+  padding: 0.5rem;
+}
+
+.artist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.artist-row-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
+}
+
+.artist-row-item:hover,
+.artist-row-item:active {
+  background: var(--bg-hover);
+}
+
+.artist-row-item .avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg-card);
+  flex-shrink: 0;
+}
+
+.artist-row-item .avatar img {
+  width: 100%;
+  height: 100%;
+}
+
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.album-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.album-card .art {
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+}
+
+.album-card .art img {
+  width: 100%;
+  height: 100%;
+}
+
+.album-card .title {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.album-card .sub {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}

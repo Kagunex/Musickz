@@ -1,0 +1,239 @@
+/* Home page specific */
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.brand {
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--accent), #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.greeting {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0.75rem 0 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.home-search {
+  margin-bottom: 1.75rem;
+}
+
+.section {
+  margin-bottom: 1.75rem;
+}
+
+/* Quick picks / cards grid */
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.quick-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  transition: transform var(--transition);
+}
+
+.quick-card:active {
+  transform: scale(0.97);
+}
+
+.quick-card .art {
+  aspect-ratio: 1;
+  background: var(--bg-hover);
+  position: relative;
+}
+
+.quick-card .art img {
+  width: 100%;
+  height: 100%;
+}
+
+.quick-card .info {
+  padding: 0.625rem 0.75rem;
+}
+
+/* Recently played list */
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.recent-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
+}
+
+.recent-item:hover,
+.recent-item:active {
+  background: var(--bg-hover);
+}
+
+.recent-item .art {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--bg-card);
+}
+
+.recent-item .art img {
+  width: 100%;
+  height: 100%;
+}
+
+.recent-item .info {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Made for you large card */
+.made-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+}
+
+.made-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.made-card .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 40%, rgba(0, 0, 0, 0.85));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem 1.125rem;
+}
+
+.made-card .overlay h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.made-card .overlay p {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+/* Artist circles */
+.artist-row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+  margin: 0 -1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  scrollbar-width: none;
+}
+
+.artist-row::-webkit-scrollbar {
+  display: none;
+}
+
+.artist-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  width: 80px;
+}
+
+.artist-circle .avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 2px solid var(--border-subtle);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.artist-circle:active .avatar,
+.artist-circle:hover .avatar {
+  border-color: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.artist-circle .avatar img {
+  width: 100%;
+  height: 100%;
+}
+
+.artist-circle span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Album / playlist carousel cards */
+.media-card {
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.media-card .art {
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-card);
+  margin-bottom: 0.5rem;
+  box-shadow: var(--shadow-card);
+}
+
+.media-card .art img {
+  width: 100%;
+  height: 100%;
+}
+
+.media-card .title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.media-card .sub {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
