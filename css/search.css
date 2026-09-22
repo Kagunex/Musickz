@@ -1,0 +1,133 @@
+/* Search & Library pages */
+
+.search-page-header {
+  margin-bottom: 1.5rem;
+}
+
+.search-page-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+
+.suggestions {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.suggestion-item {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.suggestion-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.suggestion-item svg {
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.result-section {
+  margin-bottom: 1.75rem;
+}
+
+.result-section h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.result-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.5rem 0.5rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.result-item:hover {
+  background: var(--bg-hover);
+}
+
+.result-item .art {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--bg-highlight);
+}
+
+.result-item .art.round {
+  border-radius: 50%;
+}
+
+.result-item .art img {
+  width: 100%;
+  height: 100%;
+}
+
+.result-item .info {
+  flex: 1;
+  min-width: 0;
+}
+
+.result-item .type-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+/* Library tabs */
+.lib-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.lib-tabs::-webkit-scrollbar { display: none; }
+
+.lib-tab {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg-highlight);
+  white-space: nowrap;
+  transition: background var(--transition), color var(--transition);
+}
+
+.lib-tab:hover {
+  background: #333;
+}
+
+.lib-tab.active {
+  background: var(--text-primary);
+  color: #000;
+}
