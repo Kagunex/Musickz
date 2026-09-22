@@ -1,0 +1,69 @@
+name: Clear Repository
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  clear-repository:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Delete all files and folders except .github/workflows
+        shell: bash
+        run: |
+          set -e
+
+          echo "=== Repository cleanup ==="
+
+          # Hapus semua isi root kecuali:
+          # - .git
+          # - .github
+          find . -mindepth 1 -maxdepth 1 \
+            ! -name ".git" \
+            ! -name ".github" \
+            -exec rm -rf -- {} +
+
+          # Di dalam .github, hapus semuanya kecuali workflows
+          if [ -d ".github" ]; then
+            find .github -mindepth 1 -maxdepth 1 \
+              ! -name "workflows" \
+              -exec rm -rf -- {} +
+          fi
+
+          echo ""
+          echo "=== Remaining files ==="
+          find . -maxdepth 3 -type f \
+            ! -path "./.git/*" \
+            | sort
+
+          echo ""
+          echo "=== Protected workflow directory ==="
+          find .github/workflows -maxdepth 2 -type f 2>/dev/null | sort || true
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No files to delete."
+            exit 0
+          fi
+
+          git commit -m "chore: clear repository"
+
+      - name: Push changes
+        shell: bash
+        run: |
+          git push origin HEAD:${GITHUB_REF_NAME}
