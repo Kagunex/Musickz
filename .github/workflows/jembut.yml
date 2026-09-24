@@ -1,4 +1,4 @@
-name: Extract ZIP
+name: Extract Musickz ZIP
 
 on:
   workflow_dispatch:
@@ -11,50 +11,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Find ZIP
-        id: find_zip
-        shell: bash
+        id: zip
         run: |
           set -e
 
           ZIP=$(find . -maxdepth 1 -type f -iname "*.zip" | head -n 1)
 
           if [ -z "$ZIP" ]; then
-            echo "::error::Tidak ada file ZIP di root repository."
-            echo "Isi repository:"
-            ls -la
+            echo "::error::ZIP tidak ditemukan di root repository."
             exit 1
           fi
 
-          echo "ZIP ditemukan: $ZIP"
           echo "zip=$ZIP" >> "$GITHUB_OUTPUT"
+          echo "ZIP: $ZIP"
+
+      - name: Validate ZIP
+        run: |
+          unzip -t "${{ steps.zip.outputs.zip }}"
 
       - name: Extract ZIP
-        shell: bash
         run: |
           set -e
 
-          ZIP="${{ steps.find_zip.outputs.zip }}"
+          rm -rf /tmp/musickz
+          mkdir -p /tmp/musickz
 
-          rm -rf /tmp/eclipsce-extracted
-          mkdir -p /tmp/eclipsce-extracted
+          unzip -q "${{ steps.zip.outputs.zip }}" -d /tmp/musickz
 
-          echo "Extracting: $ZIP"
+          ROOT="/tmp/musickz"
 
-          unzip -q "$ZIP" -d /tmp/eclipsce-extracted
+          # Kalau ZIP punya folder pembungkus seperti Metrolist-main/
+          COUNT=$(find "$ROOT" -mindepth 1 -maxdepth 1 | wc -l)
 
-          ROOT="/tmp/eclipsce-extracted"
-
-          # Jika ZIP hanya berisi satu folder utama,
-          # gunakan isi folder tersebut sebagai root project.
-          ITEMS=$(find "$ROOT" -mindepth 1 -maxdepth 1 | wc -l)
-
-          if [ "$ITEMS" -eq 1 ]; then
+          if [ "$COUNT" -eq 1 ]; then
             ONLY=$(find "$ROOT" -mindepth 1 -maxdepth 1 | head -n 1)
 
             if [ -d "$ONLY" ]; then
@@ -62,34 +57,45 @@ jobs:
             fi
           fi
 
-          echo "Extract root: $ROOT"
+          echo "Project root: $ROOT"
 
-          # Hapus ZIP dari hasil extract jika ada
-          find "$ROOT" -type f -iname "*.zip" -delete
+          if [ ! -f "$ROOT/gradlew" ]; then
+            echo "::error::gradlew tidak ditemukan."
+            exit 1
+          fi
 
-          # Copy seluruh isi ZIP langsung ke root repository
+          # Hapus .github dari ZIP
+          rm -rf "$ROOT/.github"
+
+          # Salin semua isi project ke root repository
           cp -a "$ROOT"/. .
 
       - name: Remove ZIP
-        shell: bash
+        run: |
+          rm -f "${{ steps.zip.outputs.zip }}"
+
+      - name: Verify
         run: |
           set -e
 
-          find . -maxdepth 1 -type f -iname "*.zip" -delete
+          echo "=== PROJECT ==="
 
-          echo "ZIP berhasil dihapus dari repository."
+          test -f gradlew
+          test -d app
 
-      - name: Show Result
-        shell: bash
-        run: |
-          echo "=== Struktur repository ==="
-          find . -maxdepth 3 \
-            -not -path "./.git/*" \
-            -not -path "./.github/workflows/*" \
-            -print | sort
+          echo "✓ gradlew"
+          echo "✓ app/"
 
-      - name: Commit Changes
-        shell: bash
+          echo ""
+          echo "=== WORKFLOW ==="
+
+          if [ -f ".github/workflows/ekstrak.yml" ]; then
+            echo "✓ ekstrak.yml tetap ada"
+          else
+            echo "::warning::ekstrak.yml tidak ditemukan."
+          fi
+
+      - name: Commit and Push
         run: |
           set -e
 
@@ -103,5 +109,6 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Extract ZIP to repository root"
+          git commit -m "Extract Musickz project"
+
           git push origin HEAD:main
